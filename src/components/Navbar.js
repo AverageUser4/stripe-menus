@@ -6,7 +6,7 @@ import sublinks from '../resources/data';
 import { useMyContext } from '../context.js';
 
 const Navbar = () => {
-  const { toggleSidebar, setHoveredIndex } = useMyContext();
+  const { toggleSidebar, setHoveredData } = useMyContext();
 
   return (
     <nav className="nav">
@@ -33,8 +33,12 @@ const Navbar = () => {
               <li key={sublink.page}>
                 <button 
                   className="link-btn"
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(-1)}
+                  onMouseEnter={(event) => {
+                    const x = event.target.getBoundingClientRect().x;
+                    const width = event.target.getBoundingClientRect().width;
+                    setHoveredData({ x, width, index });
+                  }}
+                  onMouseLeave={() => setHoveredData(prev => ({ ...prev, index: -1 }))}
                 >{sublink.page}</button>
               </li>
             )

@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react'
-import sublinks from './resources/data'
 
 const MyContext = React.createContext();
 
 function MyProvider({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState(-1);
+  const [linkButtonsPositions, setLinkButtonsPositions] = React.useState([]);
+  const [hoveredData, setHoveredData] = useState({
+    index: -1,
+    x: 0
+  });
 
   function toggleSidebar() {
     setIsSidebarOpen(prev => !prev);
@@ -16,8 +19,10 @@ function MyProvider({ children }) {
       value={{
         isSidebarOpen,
         toggleSidebar,
-        hoveredIndex,
-        setHoveredIndex
+        hoveredData,
+        setHoveredData,
+        linkButtonsPositions,
+        setLinkButtonsPositions
       }}
     >
 

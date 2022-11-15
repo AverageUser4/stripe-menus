@@ -1,27 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React from 'react';
 
 import { useMyContext } from '../context.js';
 import sublinks from '../resources/data.js';
 
 const Submenu = () => {
-  const { hoveredIndex, setHoveredIndex } = useMyContext();
-  const sublink = sublinks[hoveredIndex];
+  const { hoveredData, setHoveredData } = useMyContext();
+  const sublink = sublinks[hoveredData.index];
 
-  console.log(sublink)
+  const positionStyle = {
+    left: hoveredData.x + hoveredData.width / 2,
+  };
 
   if(!sublink)
     return <article className="submenu"></article>
 
   return (
-    <article 
+    <article
+      style={positionStyle}
       className="submenu show"
-      onMouseEnter={() => setHoveredIndex(hoveredIndex)}
-      onMouseLeave={() => setHoveredIndex(-1)}
+      onMouseEnter={() => setHoveredData(prev => ({ ...prev, index: hoveredData.index }))}
+      onMouseLeave={() => setHoveredData(prev => ({ ...prev, index: -1 }))}
     >
 
       <h4>{sublink.page}</h4>
 
-      <div className="submenu-center col-3">
+      <div className={`submenu-center col-${sublink.links.length}`}>
 
         {
           sublink.links.map(link =>
